@@ -9,11 +9,6 @@ import urllib.parse
 import requests
 import argparse
 
-urlInputted = ''
-startRangeInputted = 0
-endRangeInputted = 0
-timeInputted = 0
-
 def parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", "-u", help="Set URL to retrieve the images from. This needs to be the URL which list all of the \
