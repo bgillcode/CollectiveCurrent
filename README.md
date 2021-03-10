@@ -16,6 +16,10 @@ Retrieve and store all images for chapters, pass in the URL of the series wanted
 | --endrange | -e | Set the number to END the range from for the chapter. | `--endrange 5` this will get all of the chapters from the startrange set up to 5. If set to 10, it will retrieve all images from for all of the chapters within the range up to chapter 10. |
 | --timedelay | -t | Set the time delay for retrieving each chapter. | `--timedelay 20` if you want to wait 20 seconds between each chapter. |
 
+Note that all Help options can be displayed using:
+
+```python collectivecurrent.py --help```
+
 ### Requirements:
 Python 3
 
