@@ -10,16 +10,20 @@ import requests
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--url", "-u", help="Set URL to retrieve the images from.")
+parser.add_argument("--url", "-u", help="Set URL to retrieve the images from. This needs to be the URL which list all of the \
+chapters.")
 parser.add_argument("--startrange", "-s", help="Set the number to START the range from for the chapter.\
-For example 1, this will start the count to retrieve from chapter 1. If set to 3 it will start downloading from chapter 3.")
-parser.add_argument("--endrange", "-e", help="Set the number to END the range from for the chapter. For example 5, \
+For example: --startrange 1, this will start the count to retrieve from chapter 1. If set to 3 it will start downloading from chapter 3.")
+parser.add_argument("--endrange", "-e", help="Set the number to END the range from for the chapter. For example --endrange 5, \
 this will get all of the chapters from the startrange set up to 5.\
 If set to 10, it will retrieve all images from for all of the chapters within the range up to chapter 10.")
+parser.add_argument("--timedelay", "-t", help="Set the time delay for retrieving each chapter within a range. \
+For example, use --timedelay 20 if you want to wait 20 seconds between each chapter.")
 
 urlInputted = ''
 startRangeInputted = 0
 endRangeInputted = 0
+timeInputted = 0
 args = parser.parse_args()
 
 checkURLEnteredFlag = False
@@ -39,6 +43,12 @@ if args.endrange:
     if str(args.endrange) != -1:
         endRangeEnteredFlag = True
     endRangeInputted = str(args.url)
+
+timeEnteredFlag = False
+if args.timedelay:
+    if str(args.timedelay) != -1:
+        timeEnteredFlag = True
+    timeInputted = str(args.timedelay)
 
 # Get the chapter links
 chapterURL = urlInputted
@@ -99,3 +109,5 @@ else:
             filenameNumber = filenameGotten.split('.')[0].zfill(3) + '.' + filenameGotten.split('.')[1]
             print(filenameNumber)
             open(str(filenameNumber), 'wb').write(r.content)
+
+        time.sleep(timeInputted)
