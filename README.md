@@ -18,14 +18,14 @@ Retrieve and store all images for chapters, pass in the URL of the series wanted
 
 Note that all Help options can be displayed using:
 
-```python collectivecurrent.py --help```
+```python collective_current.py --help```
 
 ### Requirements:
 Python 3
 
 ### Example usage for CollectiveCurrent:
 
-```python collectivecurrent.py --url http://www.url.of.series.to.retrieve --startrange 1 --endrange 5 --timedelay 5```
+```python collective_current.py --url http://www.url.of.series.to.retrieve --startrange 1 --endrange 5 --timedelay 5```
 
 ### Set up a virtual environment for CollectiveCurrent:
 
