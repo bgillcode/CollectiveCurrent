@@ -32,6 +32,6 @@ for i in range(rangeStart, rangeEnd):
 
         a = urlparse(line['src'])
         filenameGotten = os.path.basename(a.path)
-        filenameNumber = filenameGotten.split('.')[0].zfill(3)
+        filenameNumber = filenameGotten.split('.')[0].zfill(3) + '.' + filenameGotten.split('.')[1]
         print(filenameNumber)
         open(str(filenameGotten).zfill(3), 'wb').write(r.content)
