@@ -16,3 +16,18 @@ for i in range(rangeStart, rangeEnd):
     # Pass in the page that you want
     page = urlopen(req).read()
     soup = BeautifulSoup(page, 'html.parser')
+
+    textGottenContent = soup.find(class_="container-chapter-reader").find_all('img')
+
+    for line in textGottenContent:
+        domain = 'https://' + urllib.parse.urlparse(line['src']).netloc + urllib.parse.urlparse(line['src']).path
+
+        print(domain)
+        r = requests.get(domain)
+        print(r)
+
+        a = urlparse(line['src'])
+        filenameGotten = os.path.basename(a.path)
+        filenameNumber = filenameGotten.split('.')[0].zfill(3)
+        print(filenameNumber)
+        open(str(filenameGotten).zfill(3), 'wb').write(r.content)
