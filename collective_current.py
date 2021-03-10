@@ -10,17 +10,13 @@ import requests
 import argparse
 
 parser = argparse.ArgumentParser()
-
 parser.add_argument("--url", "-u", help="Set URL to retrieve the images from.")
-
 urlInputted = ''
-
 # Read arguments from the command line
 args = parser.parse_args()
 
-checkURLEntered = False
-
 # Check for --url
+checkURLEntered = False
 if args.url:
     if str(args.url).strip().find("http") != -1:
         checkURLEntered = True
@@ -40,6 +36,12 @@ else:
         page = urlopen(req).read()
         soup = BeautifulSoup(page, 'html.parser')
 
+        thisReferer = ''
+        if url.strip().find("nelo") != -1:
+            thisReferer = 'https://manganelo.com/'
+        elif url.strip().find("kakalot") != -1:
+            thisReferer = 'https://mangakakalot.com/'
+
         textGottenContent = soup.find(class_="container-chapter-reader").find_all('img')
 
         for line in textGottenContent:
@@ -48,11 +50,11 @@ else:
             print(domain)
             r = requests.get(domain, headers={'Accept': 'image/png,image/svg+xml,image/*;q=0.8,video/*;q=0.8,*/*;q=0.5', \
             'Accept-Encoding': 'gzip, deflate, br', \
-            'referer': 'https://manganelo.com/'})
+            'referer': thisReferer})
             print(r)
 
             a = urlparse(line['src'])
             filenameGotten = os.path.basename(a.path)
             filenameNumber = filenameGotten.split('.')[0].zfill(3) + '.' + filenameGotten.split('.')[1]
             print(filenameNumber)
-            open(str(filenameGotten).zfill(3), 'wb').write(r.content)
+            open(str(filenameNumber), 'wb').write(r.content)
