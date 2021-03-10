@@ -11,11 +11,15 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--url", "-u", help="Set URL to retrieve the images from.")
+parser.add_argument("--startrange", "-s", help="Set the number to START the range from for the chapter.\
+For example 1, this will start the count to retrieve from chapter 1. If set to 3 it will start downloading from chapter 3.")
+parser.add_argument("--endrange", "-e", help="Set the number to END the range from for the chapter. For example 5, \
+this will get all of the chapters from the startrange set up to 5.\
+If set to 10, it will retrieve all images from for all of the chapters within the range up to chapter 10.")
+
 urlInputted = ''
-# Read arguments from the command line
 args = parser.parse_args()
 
-# Check for --url
 checkURLEntered = False
 if args.url:
     if str(args.url).strip().find("http") != -1:
