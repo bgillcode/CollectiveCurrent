@@ -19,11 +19,15 @@ Retrieve and store all images for chapters, pass in the URL of the series wanted
 ### Requirements:
 Python 3
 
+### Example usage for CollectiveCurrent:
+
+```python collectivecurrent.py --url http://www.url.of.series.to.retrieve --startrange 1 --endrange 5 --timedelay 5```
+
 ### Set up a virtual environment for CollectiveCurrent:
 
 ##### Mac OSX, Linux:
 
-```python3 -m venv venv````
+```python3 -m venv venv```
 
 Then to activate it (make sure you are in the main project folder):
 
