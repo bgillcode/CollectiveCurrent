@@ -85,11 +85,21 @@ else:
         page = urlopen(req).read()
         soup = BeautifulSoup(page, 'html.parser')
 
+
+
         thisReferer = ''
         if url.strip().find("nelo") != -1:
             thisReferer = 'https://manganelo.com/'
         elif url.strip().find("kakalot") != -1:
             thisReferer = 'https://mangakakalot.com/'
+
+        chapterName = url.rsplit('/', 1)[-1]
+
+        try:
+            os.makedirs(chapterName)
+        except FileExistsError:
+            # directory already exists so go to next one
+            break
 
         textGottenContent = soup.find(class_="container-chapter-reader").find_all('img')
 
@@ -108,6 +118,6 @@ else:
             filenameGotten = os.path.basename(a.path)
             filenameNumber = filenameGotten.split('.')[0].zfill(3) + '.' + filenameGotten.split('.')[1]
             print(filenameNumber)
-            open(str(filenameNumber), 'wb').write(r.content)
+            open(chapterName + "\\" + str(filenameNumber), 'wb').write(r.content)
 
         time.sleep(timeInputted)
