@@ -23,7 +23,9 @@ for i in range(rangeStart, rangeEnd):
         domain = 'https://' + urllib.parse.urlparse(line['src']).netloc + urllib.parse.urlparse(line['src']).path
 
         print(domain)
-        r = requests.get(domain)
+        r = requests.get(domain, headers={'Accept': 'image/png,image/svg+xml,image/*;q=0.8,video/*;q=0.8,*/*;q=0.5', \
+        'Accept-Encoding': 'gzip, deflate, br', \
+        'referer': 'https://manganelo.com/'})
         print(r)
 
         a = urlparse(line['src'])
