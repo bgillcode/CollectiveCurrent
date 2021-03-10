@@ -18,18 +18,45 @@ this will get all of the chapters from the startrange set up to 5.\
 If set to 10, it will retrieve all images from for all of the chapters within the range up to chapter 10.")
 
 urlInputted = ''
+startRangeInputted = 0
+endRangeInputted = 0
 args = parser.parse_args()
 
-checkURLEntered = False
+checkURLEnteredFlag = False
 if args.url:
     if str(args.url).strip().find("http") != -1:
-        checkURLEntered = True
+        checkURLEnteredFlag = True
     urlInputted = str(args.url)
 
-rangeStart = 1
-rangeEnd = 2
+startRangeEnteredFlag = False
+if args.startrange:
+    if str(args.startrange) != -1:
+        startRangeEnteredFlag = True
+    startRangeInputted = str(args.url)
 
-if checkURLEntered == False:
+endRangeEnteredFlag = False
+if args.endrange:
+    if str(args.endrange) != -1:
+        endRangeEnteredFlag = True
+    endRangeInputted = str(args.url)
+
+# Get the chapter links
+textGottenContentChapter = soup.find_all(class_="chapter-name text-nowrap", href=True)
+
+if startRangeInputted == 0:
+    # Download from the first chapter onwards if the start range is not given
+    rangeStart = 1
+else:
+    rangeStart = int(startRangeInputted)
+
+if endRangeInputted == 0:
+    # Download all of the chapters up the end if an end range is not given
+    rangeStart = len(textGottenContentChapter)
+else:
+    rangeStart = int(endRangeInputted)
+
+
+if checkURLEnteredFlag == False:
     print('Please try again and enter a valid URL to retrieve the images from')
     sys.exit()
 
