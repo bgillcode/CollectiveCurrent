@@ -41,28 +41,36 @@ if args.endrange:
     endRangeInputted = str(args.url)
 
 # Get the chapter links
-textGottenContentChapter = soup.find_all(class_="chapter-name text-nowrap", href=True)
+chapterURL = urlInputted
+reqChapters = Request(chapterURL, headers={'User-agent': 'Mozilla/5.0'})
+pageChapter = urlopen(reqChapters).read()
+soupChapters = BeautifulSoup(pageChapter, 'html.parser')
+textGottenContentChapter = soupChapters.find_all(class_="chapter-name text-nowrap", href=True)
+textGottenContentChapter = textGottenContentChapter[::-1]
+
+print(textGottenContentChapter)
 
 if startRangeInputted == 0:
     # Download from the first chapter onwards if the start range is not given
-    rangeStart = 1
+    rangeStart = 0
+elif startRangeInputted == 1:
+    rangeStart = 0
 else:
     rangeStart = int(startRangeInputted)
 
 if endRangeInputted == 0:
     # Download all of the chapters up the end if an end range is not given
-    rangeStart = len(textGottenContentChapter)
+    rangeEnd = len(textGottenContentChapter)
 else:
-    rangeStart = int(endRangeInputted)
-
+    rangeEnd = int(endRangeInputted)
 
 if checkURLEnteredFlag == False:
     print('Please try again and enter a valid URL to retrieve the images from')
     sys.exit()
 
 else:
-    for i in range(rangeStart, rangeEnd):
-        url = urlInputted
+    for i in range(rangeStart, rangeEnd + 1):
+        url = textGottenContentChapter[i]['href']
         req = Request(url, headers={'User-agent': 'Mozilla/5.0'})
         page = urlopen(req).read()
         soup = BeautifulSoup(page, 'html.parser')
@@ -75,16 +83,18 @@ else:
 
         textGottenContent = soup.find(class_="container-chapter-reader").find_all('img')
 
-        for line in textGottenContent:
-            domain = 'https://' + urllib.parse.urlparse(line['src']).netloc + urllib.parse.urlparse(line['src']).path
+        for m in textGottenContent:
+            domain = 'https://' + urllib.parse.urlparse(m['src']).netloc +\
+             urllib.parse.urlparse(m['src']).path
 
             print(domain)
-            r = requests.get(domain, headers={'Accept': 'image/png,image/svg+xml,image/*;q=0.8,video/*;q=0.8,*/*;q=0.5', \
+            r = requests.get(domain, headers= \
+            {'Accept': 'image/png,image/svg+xml,image/*;q=0.8,video/*;q=0.8,*/*;q=0.5', \
             'Accept-Encoding': 'gzip, deflate, br', \
             'referer': thisReferer})
             print(r)
 
-            a = urlparse(line['src'])
+            a = urlparse(m['src'])
             filenameGotten = os.path.basename(a.path)
             filenameNumber = filenameGotten.split('.')[0].zfill(3) + '.' + filenameGotten.split('.')[1]
             print(filenameNumber)
