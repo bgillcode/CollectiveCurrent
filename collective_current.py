@@ -14,6 +14,8 @@ rangeEnd = 2
 
 for i in range(rangeStart, rangeEnd):
     # Pass in the page that you want
+    url = "https://manganelo.com/chapter/bi918289/chapter_1"
+    req = Request(url, headers={'User-agent': 'Mozilla/5.0'})
     page = urlopen(req).read()
     soup = BeautifulSoup(page, 'html.parser')
 
